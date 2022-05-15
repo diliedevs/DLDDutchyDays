@@ -1,0 +1,14 @@
+{
+  "pins" : [
+    {
+      "identity" : "dldfoundation",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/diliedevs/DLDFoundation",
+      "state" : {
+        "revision" : "9058de65bac08c86069d92017397bdca4156cd67",
+        "version" : "1.3.3"
+      }
+    }
+  ],
+  "version" : 2
+}
