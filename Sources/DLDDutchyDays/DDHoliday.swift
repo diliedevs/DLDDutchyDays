@@ -8,36 +8,44 @@
 import Foundation
 import DLDFoundation
 
-/// <#Description#>
+/// A struct representing a holiday.
+///
+/// `DDHoliday` conforms to the `Codable` and `Identifiable` protocols.
 public struct DDHoliday: Codable, Identifiable {
-    /// <#Description#>
-    public let date      : Date
-    /// <#Description#>
-    public let name      : String
-    /// <#Description#>
-    public let localName : String
     
-    /// <#Description#>
-    public var id              : Double { date.timeIntervalSinceReferenceDate }
-    /// <#Description#>
-    public var isInWeekend     : Bool   { date.isWeekend }
-    /// <#Description#>
-    public var isGoodFriday    : Bool   { lowName.hasPrefix("good") }
-    /// <#Description#>
-    public var isLiberationDay : Bool   { lowName.hasPrefix("liberation") }
+    /// The date of the holiday.
+    public let date: Date
     
-    /// <#Description#>
+    /// The name of the holiday.
+    public let name: String
+    
+    /// The local name of the holiday.
+    public let localName: String
+    
+    /// The unique identifier of the holiday based on its date.
+    public var id: Double { date.timeIntervalSinceReferenceDate }
+    
+    /// Indicates whether the holiday falls on a weekend.
+    public var isInWeekend: Bool { date.isWeekend }
+    
+    /// Indicates whether the holiday is Good Friday.
+    public var isGoodFriday: Bool { lowName.hasPrefix("good") }
+    
+    /// Indicates whether the holiday is Liberation Day.
+    public var isLiberationDay: Bool { lowName.hasPrefix("liberation") }
+    
+    /// Initializes a new instance of `DDHoliday` with the provided information.
+    ///
     /// - Parameters:
-    ///   - date: <#date description#>
-    ///   - name: <#name description#>
-    ///   - localName: <#localName description#>
+    ///   - date: The date of the holiday.
+    ///   - name: The name of the holiday.
+    ///   - localName: The local name of the holiday.
     public init(date: Date, name: String, localName: String) {
         self.date = date
         self.name = name
         self.localName = localName
     }
 }
-
 
 private extension DDHoliday {
     var lowName: String { name.lowercased() }

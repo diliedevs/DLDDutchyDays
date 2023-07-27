@@ -8,18 +8,23 @@
 import Foundation
 import DLDFoundation
 
-/// <#Description#>
+/// A struct representing exclusions for certain dates.
+///
+/// `DDExclusions` conforms to the `OptionSet` protocol.
 public struct DDExclusions: OptionSet {
-    /// <#Description#>
+    
+    /// The underlying integer value of the option set.
     public let rawValue: Int
     
-    /// <#Description#>
+    /// Excludes weekends.
     public static let weekends = DDExclusions(rawValue: 1 << 0)
-    /// <#Description#>
+    
+    /// Excludes Good Friday.
     public static let goodFriday = DDExclusions(rawValue: 1 << 1)
     
-    /// <#Description#>
-    /// - Parameter rawValue: <#rawValue description#>
+    /// Initializes a new instance of `DDExclusions` with the provided raw value.
+    ///
+    /// - Parameter rawValue: The raw value representing the exclusions.
     public init(rawValue: Int) {
         self.rawValue = rawValue
     }

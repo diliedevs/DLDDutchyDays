@@ -8,32 +8,37 @@
 import Foundation
 import DLDFoundation
 
-/// <#Description#>
+/// A utility struct for retrieving Dutch holidays.
 public struct DutchyDays {
-    /// <#Description#>
+    
+    /// The year for which to retrieve holidays.
     public let year: Int
-    /// <#Description#>
+    
+    /// The occurrence of Liberation Day.
     public let liberationOccurrence: DDLiberationOccurrence
-    /// <#Description#>
+    
+    /// The exclusions for certain dates.
     public let exclusions: DDExclusions
     
-    /// <#Description#>
+    /// Initializes a new instance of `DutchyDays` with the provided information.
+    ///
     /// - Parameters:
-    ///   - year: <#year description#>
-    ///   - liberationOccurrence: <#liberationOccurrence description#>
-    ///   - exclusions: <#exclusions description#>
+    ///   - year: The year for which to retrieve holidays.
+    ///   - liberationOccurrence: The occurrence of Liberation Day.
+    ///   - exclusions: The exclusions for certain dates.
     public init(year: Int, liberationOccurrence: DDLiberationOccurrence, exclusions: DDExclusions) {
         self.year = year
         self.liberationOccurrence = liberationOccurrence
         self.exclusions = exclusions
     }
     
-    /// <#Description#>
+    /// Retrieves the holidays for the specified year.
+    ///
     /// - Parameters:
-    ///   - year: <#year description#>
-    ///   - liberationOccurrence: <#liberationOccurrence description#>
-    ///   - exclusions: <#exclusions description#>
-    /// - Returns: <#description#>
+    ///   - year: The year for which to retrieve holidays. Defaults to the current year.
+    ///   - liberationOccurrence: The occurrence of Liberation Day. Defaults to `.always`.
+    ///   - exclusions: The exclusions for certain dates. Defaults to an empty set of exclusions.
+    /// - Returns: An array of `DDHoliday` representing the holidays.
     public static func getHolidays(in year: Int = .thisYear,
                                    liberationOccurrence: DDLiberationOccurrence = .always,
                                    exclusions: DDExclusions = []) async -> [DDHoliday] {
@@ -64,7 +69,7 @@ private extension DutchyDays {
         
         do {
             let (data, _) = try await URLSession.shared.data(from: url)
-            let holidays = try data.jsonDecode([DDHoliday].self, using: .holidayDecoder)
+            let holidays = try data.decodeJSON([DDHoliday].self, using: .holidayDecoder)
             
             return holidays
         } catch {
@@ -77,8 +82,9 @@ private extension DutchyDays {
 
 fileprivate extension JSONDecoder {
     static var holidayDecoder: JSONDecoder {
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .formatted(DateFormatter(format: .yMMdd))
-        return decoder
+        let df = DateFormatter()
+        df.setLocalizedDateFormatFromTemplate("y-MM-dd")
+        
+        return JSONDecoder(dateDecodingStrategy: .formatted(df))
     }
 }

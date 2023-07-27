@@ -8,13 +8,24 @@
 import Foundation
 import DLDFoundation
 
-/// <#Description#>
+/// An enumeration representing the occurrence of Liberation Day.
+///
+/// `DDLiberationOccurrence` conforms to the `String`, `CaseIterable`, and `Identifiable` protocols.
 public enum DDLiberationOccurrence: String, CaseIterable, Identifiable {
-    case always, never, everyFiveYears
     
-    /// <#Description#>
+    /// Liberation Day always occurs.
+    case always
+    
+    /// Liberation Day never occurs.
+    case never
+    
+    /// Liberation Day occurs every five years.
+    case everyFiveYears
+    
+    /// The unique identifier of the occurrence.
     public var id: String { rawValue }
-    /// <#Description#>
+    
+    /// The title of the occurrence.
     public var title: String {
         self == .everyFiveYears ? "Every 5 years" : rawValue.capitalized
     }
