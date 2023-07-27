@@ -83,7 +83,7 @@ private extension DutchyDays {
 fileprivate extension JSONDecoder {
     static var holidayDecoder: JSONDecoder {
         let df = DateFormatter()
-        df.setLocalizedDateFormatFromTemplate("y-MM-dd")
+        df.dateFormat = "y-MM-dd"
         
         return JSONDecoder(dateDecodingStrategy: .formatted(df))
     }
