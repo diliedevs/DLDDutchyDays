@@ -28,7 +28,7 @@ import DLDDutchyDays
 
 
 ## Credits
-DLDRating was made by [Dionne Lie Sam Foek](https://twitter.com/DionneLie). It’s available under the MIT license, which permits commercial use, modification, distribution, and private use.
+DLDDutchyDays was made by [Dionne Lie Sam Foek](https://twitter.com/DionneLie). It’s available under the MIT license, which permits commercial use, modification, distribution, and private use.
 
 This would not have been possible without the amazing work by [Paul Hudson](https://twitter.com/twostraws) on his [Hacking with Swift](https://www.hackingwithswift.com) site.
 
