@@ -51,11 +51,19 @@ private extension DDHoliday {
     var lowName: String { name.lowercased() }
 }
 
-extension Array where Element == DDHoliday {
+/// An extension for `Array` where the elements are of type `DDHoliday`.
+public extension Array where Element == DDHoliday {
+    
+    /// Removes all holidays that fall on weekends from the array.
+    ///
+    /// - Note: Holidays that fall on either Saturday or Sunday will be removed.
     mutating func removeWeekends() {
         self.removeAll(where: \.isInWeekend)
     }
     
+    /// Removes all holidays that are Good Friday from the array.
+    ///
+    /// - Note: Holidays that are specifically Good Friday will be removed.
     mutating func removeGoodFriday() {
         self.removeAll(where: \.isGoodFriday)
     }

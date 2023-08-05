@@ -31,19 +31,28 @@ public enum DDLiberationOccurrence: String, CaseIterable, Identifiable {
     }
 }
 
-extension Array where Element == DDHoliday {
-    mutating func removeLiberation(withOccurrence occurrence: DDLiberationOccurrence, isQuinYear: Bool) {
+/// An extension for `Array` with `Element` constrained to `DDHoliday`.
+public extension Array where Element == DDHoliday {
+    
+    /// Removes the Liberation Day from the array based on the specified `occurrence` and `isQuinYear` flag.
+    ///
+    /// - Parameters:
+    ///   - occurrence: The occurrence of Liberation Day.
+    ///   - isQuinYear: A boolean flag indicating if the year is a multiple of 5.
+    mutating func removeLiberationDay(withOccurrence occurrence: DDLiberationOccurrence, isQuinYear: Bool) {
         switch occurrence {
             case .always         : self.removeNone()
-            case .never          : self.removeLiberationDay()
-            case .everyFiveYears : isQuinYear ? self.removeNone() : self.removeLiberationDay()
+            case .never          : self.removeLiberation()
+            case .everyFiveYears : isQuinYear ? self.removeNone() : self.removeLiberation()
         }
     }
     
-    private mutating func removeLiberationDay() {
+    /// Removes the `LiberationDay` from the array.
+    private mutating func removeLiberation() {
         self.removeAll(where: \.isLiberationDay)
     }
     
+    /// Removes all elements from the array.
     private mutating func removeNone() {
         self.removeAll(where: { _ in return false })
     }

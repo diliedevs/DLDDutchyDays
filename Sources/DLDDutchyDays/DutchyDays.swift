@@ -51,7 +51,7 @@ private extension DutchyDays {
     var apiAddress         : String { "https://date.nager.at/api/v3/PublicHolidays/\(year.string)/NL" }
     var excludeWeekends    : Bool   { exclusions.contains(.weekends) }
     var excludeGoodFriday  : Bool   { exclusions.contains(.goodFriday) }
-    var isQuinquennialYear : Bool   { year.isMultiple(of: 5) }
+    var isQuinquennialYear : Bool   { year.isFiveFold }
 }
 
 private extension DutchyDays {
@@ -59,7 +59,7 @@ private extension DutchyDays {
         var holidays = await fetchAllDates()
         if excludeWeekends { holidays.removeWeekends() }
         if excludeGoodFriday { holidays.removeGoodFriday() }
-        holidays.removeLiberation(withOccurrence: liberationOccurrence, isQuinYear: isQuinquennialYear)
+        holidays.removeLiberationDay(withOccurrence: liberationOccurrence, isQuinYear: isQuinquennialYear)
         
         return holidays.sorted(by: \.date)
     }
@@ -86,5 +86,14 @@ fileprivate extension JSONDecoder {
         df.dateFormat = "y-MM-dd"
         
         return JSONDecoder(dateDecodingStrategy: .formatted(df))
+    }
+}
+
+/// An extension for the `Int` type.
+public extension Int {
+    
+    /// A computed property that returns `true` if the number is a multiple of 5, otherwise `false`.
+    var isFiveFold: Bool {
+        self.isMultiple(of: 5)
     }
 }
