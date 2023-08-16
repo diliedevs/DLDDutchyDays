@@ -51,7 +51,6 @@ private extension DutchyDays {
     var apiAddress         : String { "https://date.nager.at/api/v3/PublicHolidays/\(year.string)/NL" }
     var excludeWeekends    : Bool   { exclusions.contains(.weekends) }
     var excludeGoodFriday  : Bool   { exclusions.contains(.goodFriday) }
-    var isQuinquennialYear : Bool   { year.isFiveFold }
 }
 
 private extension DutchyDays {
@@ -59,7 +58,7 @@ private extension DutchyDays {
         var holidays = await fetchAllDates()
         if excludeWeekends { holidays.removeWeekends() }
         if excludeGoodFriday { holidays.removeGoodFriday() }
-        holidays.removeLiberationDay(withOccurrence: liberationOccurrence, isQuinYear: isQuinquennialYear)
+        holidays.removeLiberationDay(withOccurrence: liberationOccurrence)
         
         return holidays.sorted(by: \.date)
     }

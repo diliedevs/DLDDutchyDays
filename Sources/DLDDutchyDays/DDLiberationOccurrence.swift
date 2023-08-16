@@ -34,25 +34,27 @@ public enum DDLiberationOccurrence: String, CaseIterable, Identifiable {
 /// An extension for `Array` with `Element` constrained to `DDHoliday`.
 public extension Array where Element == DDHoliday {
     
-    /// Removes the Liberation Day from the array based on the specified `occurrence` and `isQuinYear` flag.
+    /// Removes the Liberation Day event from the calendar with the specified occurrence.
     ///
-    /// - Parameters:
-    ///   - occurrence: The occurrence of Liberation Day.
-    ///   - isQuinYear: A boolean flag indicating if the year is a multiple of 5.
-    mutating func removeLiberationDay(withOccurrence occurrence: DDLiberationOccurrence, isQuinYear: Bool) {
+    /// - Parameter occurrence: The occurrence of the Liberation Day event to be removed.
+    mutating func removeLiberationDay(withOccurrence occurrence: DDLiberationOccurrence) {
         switch occurrence {
             case .always         : self.removeNone()
-            case .never          : self.removeLiberation()
-            case .everyFiveYears : isQuinYear ? self.removeNone() : self.removeLiberation()
+            case .never          : self.removeAllLiberation()
+            case .everyFiveYears : self.removeQuinLiberation()
         }
     }
     
-    /// Removes the `LiberationDay` from the array.
-    private mutating func removeLiberation() {
+    private mutating func removeAllLiberation() {
         self.removeAll(where: \.isLiberationDay)
     }
     
-    /// Removes all elements from the array.
+    private mutating func removeQuinLiberation() {
+        self.removeAll {
+            $0.isLiberationDay && $0.date.year.isFiveFold
+        }
+    }
+    
     private mutating func removeNone() {
         self.removeAll(where: { _ in return false })
     }
