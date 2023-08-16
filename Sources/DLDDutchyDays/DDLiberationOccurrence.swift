@@ -51,7 +51,7 @@ public extension Array where Element == DDHoliday {
     
     private mutating func removeQuinLiberation() {
         self.removeAll {
-            $0.isLiberationDay && $0.date.year.isFiveFold
+            $0.isLiberationDay && ($0.date.year.isFiveFold == false)
         }
     }
     
